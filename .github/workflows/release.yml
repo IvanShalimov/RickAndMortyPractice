@@ -1,0 +1,36 @@
+name: Android CI & Release     # Название workflow
+
+on:
+  push:
+    branches: [ "master" ]    # Запуск при пуше в master (мержи тоже считаются)
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest    # GitHub предоставляет виртуальную машину с Ubuntu
+
+    steps:
+      # Шаг 1: Получаем исходный код
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Шаг 2: Устанавливаем JDK (для сборки Android)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Шаг 3: Собираем APK (релизную версию)
+      - name: Build Release APK
+        run: ./gradlew assembleDebug
+
+      # Шаг 4: Создаём GitHub-релиз и загружаем APK
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: app/build/outputs/apk/release/app-release.apk  # Путь к APK
+          generate_release_notes: true  # Автогенерация описания
+          draft: false                  # Не черновик
+          prerelease: false             # Не пре-релиз
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Секретный токен (GitHub сам его подставляет)
