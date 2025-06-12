@@ -24,6 +24,30 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Extract version and create tag
+        id: tag-version
+        run: |
+          # Извлекаем versionName из build.gradle
+          VERSION=$(grep 'versionName' app/build.gradle | cut -d'"' -f2)
+          echo "Extracted version: $VERSION"
+          
+          # Создаём тег (формат vX.X.X)
+          TAG_NAME="v$VERSION"
+          echo "Creating tag: $TAG_NAME"
+          
+          # Сохраняем тег в выходные данные шага
+          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+          
+          # Создаём и пушим тег
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+
+      - name: Increment versionCode
+        run: |
+          sed -i 's/versionCode \([0-9]*\)/versionCode $((\1+1))/' app/build.gradle
+          NEW_VERSION=$(grep 'versionName' app/build.gradle | cut -d'"' -f2)
+          echo "New version: $NEW_VERSION"
+
       # Шаг 3: Собираем APK (релизную версию)
       - name: Build Release APK
         run: ./gradlew assembleDebug
@@ -33,6 +57,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: app/build/outputs/apk/debug/app-debug.apk  # Путь к APK
+          tag_name: ${{ steps.tag-version.outputs.tag_name }}  # Берём тег из предыдущего шага
           generate_release_notes: true  # Автогенерация описания
           draft: false                  # Не черновик
           prerelease: false             # Не пре-релиз
