@@ -35,7 +35,7 @@ jobs:
         id: tag-version
         run: |
           # Извлекаем versionName из build.gradle
-          VERSION=$(grep 'versionName' app/build.gradle | cut -d'"' -f2)
+          VERSION=$(grep 'versionName' app/build.gradle.kts | cut -d'"' -f2)
           echo "Extracted version: $VERSION"
           
           # Создаём тег (формат vX.X.X)
@@ -51,8 +51,8 @@ jobs:
 
       - name: Increment versionCode
         run: |
-          sed -i 's/versionCode \([0-9]*\)/versionCode $((\1+1))/' app/build.gradle
-          NEW_VERSION=$(grep 'versionName' app/build.gradle | cut -d'"' -f2)
+          sed -i 's/versionCode \([0-9]*\)/versionCode $((\1+1))/' app/build.gradle.kts
+          NEW_VERSION=$(grep 'versionName' app/build.gradle.kts | cut -d'"' -f2)
           echo "New version: $NEW_VERSION"
 
       # Шаг 3: Собираем APK (релизную версию)
