@@ -49,11 +49,17 @@ jobs:
           git tag $TAG_NAME
           git push origin $TAG_NAME
 
-      - name: Increment versionCode
+      - name: Increment version
         run: |
-          sed -i 's/versionCode \([0-9]*\)/versionCode $((\1+1))/' app/build.gradle.kts
-          NEW_VERSION=$(grep 'versionName' app/build.gradle.kts | cut -d'"' -f2)
-          echo "New version: $NEW_VERSION"
+          # Для Kotlin DSL - правильный синтаксис инкремента
+          CURRENT_CODE=$(grep 'versionCode =' app/build.gradle.kts | cut -d'=' -f2 | xargs)
+          NEW_CODE=$((CURRENT_CODE + 1))
+          sed -i "s/versionCode = $CURRENT_CODE/versionCode = $NEW_CODE/" app/build.gradle.kts
+          
+          # Извлекаем версию для тега
+          NEW_VERSION=$(grep 'versionName =' app/build.gradle.kts | cut -d'"' -f2)
+          echo "New version code: $NEW_CODE"
+          echo "New version name: $NEW_VERSION"
 
       # Шаг 3: Собираем APK (релизную версию)
       - name: Build Release APK
