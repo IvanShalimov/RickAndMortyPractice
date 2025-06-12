@@ -4,6 +4,10 @@ on:
   push:
     branches: [ "master" ]    # Запуск при пуше в master (мержи тоже считаются)
 
+# Добавляем разрешения для записи
+permissions:
+  contents: write
+
 jobs:
   build-and-release:
     runs-on: ubuntu-latest    # GitHub предоставляет виртуальную машину с Ubuntu
@@ -12,6 +16,9 @@ jobs:
       # Шаг 1: Получаем исходный код
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          # Необходимо для возможности пушить теги
+          fetch-depth: 0
 
       # 🔥 Даём права на выполнение gradlew
       - name: Grant execute permission for gradlew
