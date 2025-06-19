@@ -1,0 +1,75 @@
+build:
+  maxIssues: 0
+  weights:
+    complexity: 2
+    LongParameterList: 1
+    style: 1
+
+processors:
+  active: true
+  exclude:
+    - 'DetektProgressListener'
+
+config:
+  validation: true
+  warningsAsErrors: true
+  excludes: '' # можно указать пути, если нужно исключить, например, test директории
+
+style:
+  MagicNumber:
+    active: false # отключено, чтобы не ругался на цвета/константы в UI
+  WildcardImport:
+    active: true
+  UnusedImports:
+    active: true
+  NoTabs:
+    active: true
+  MaxLineLength:
+    active: true
+    maxLineLength: 100 # как рекомендует Google
+  OptionalUnit:
+    active: true
+  UseDataClass:
+    active: true
+  EqualsOnSignatureLine:
+    active: true
+  NewLineAtEndOfFile:
+    active: false
+
+naming:
+  FunctionNaming:
+    active: true
+    functionPattern: '^[a-zA-Z][a-zA-Z0-9]*$'
+  VariableNaming:
+    active: true
+    variablePattern: '^[a-z][A-Za-z0-9]*$'
+  TopLevelPropertyNaming:
+    active: true
+    constantPattern: '^[A-Z][_A-Z0-9]*$'
+
+complexity:
+  LargeClass:
+    active: true
+    threshold: 600
+  LongMethod:
+    active: true
+    threshold: 60
+  NestedBlockDepth:
+    active: true
+    threshold: 4
+  TooManyFunctions:
+    active: true
+    thresholdInFiles: 20
+    thresholdInClasses: 20
+
+comments:
+  UndocumentedPublicClass:
+    active: false # отключено для простоты; включить, если используете KDoc
+  CommentOverPrivateFunction:
+    active: false
+
+performance:
+  ForEachOnRange:
+    active: true
+  SpreadOperator:
+    active: true

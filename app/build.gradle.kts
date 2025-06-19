@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kspplugin)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -38,6 +39,13 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+detekt {
+    toolVersion = "1.23.6"
+    config = files("$rootDir/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true // опционально: расширяет дефолтную конфигурацию
+    allRules = false // true — если хотите включить ВСЕ правила
 }
 
 dependencies {
