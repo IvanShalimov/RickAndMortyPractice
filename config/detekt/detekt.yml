@@ -33,6 +33,8 @@ style:
     active: true
   EqualsOnSignatureLine:
     active: true
+  NewLineAtEndOfFile:
+    active: false
 
 naming:
   FunctionNaming:
