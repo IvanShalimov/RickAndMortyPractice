@@ -73,6 +73,7 @@ dependencies {
     ksp(libs.moshi.codogen)
     // network
     implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.moshi)
     implementation(project(":core"))
     implementation(project(":core-navigation"))
     implementation(project(":core-ui"))

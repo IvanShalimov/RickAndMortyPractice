@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.kspplugin)
 }
 
 android {
@@ -41,4 +42,16 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(project(":app"))
+
+    // dagger
+    implementation(libs.dagger)
+    ksp(libs.dagger)
+    // moshi
+    implementation(libs.moshi)
+    ksp(libs.moshi.codogen)
+    // network
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.moshi)
 }

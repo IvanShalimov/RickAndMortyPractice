@@ -35,6 +35,7 @@ dagger = { group = "com.google.dagger", name = "dagger", version.ref = "daggerVe
 moshi = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshiVer"}
 moshi-codogen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiVer"}
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVer"}
+retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitVer"}
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
