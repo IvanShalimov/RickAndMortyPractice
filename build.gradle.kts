@@ -7,3 +7,5 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.detekt) apply false
 }
+
+apply(from = "./scripts/build/git-hooks.gradle.kts")
