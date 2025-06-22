@@ -8,4 +8,4 @@ plugins {
     alias(libs.plugins.detekt) apply false
 }
 
-apply(from = "./scripts/build/git-hooks.gradle.kts")
+apply(from = "scripts/build/git-hooks.gradle.kts")
